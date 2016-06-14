@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mnantel.fr/example/api" xmlns="http://www.mnantel.fr/example/api">
+
+	<!-- We use <xsd:include> since the included schema and the current schema are defined in the same namespace. -->
+	<xsd:include schemaLocation="BasicTypes.xsd"></xsd:include>
+
+	<xsd:simpleType name="AppleVariety">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Elstar" />
+			<xsd:enumeration value="Golden" />
+			<xsd:enumeration value="Royal Gala" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="Apple">
+		<xsd:sequence>
+			<xsd:element name="variety" type="AppleVariety" />
+			<xsd:element name="colour" type="xsd:string" default="green" />
+			<xsd:element name="price" type="xsd:double" />
+			<xsd:element name="uuid" type="UUID" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="AppleCollection">
+		<!-- This *MUST* remain empty. The implementation is fully defined in the .xjb file. -->
+	</xsd:complexType>
+
+	<xsd:complexType name="BadAppleCollection">
+		<!-- Do *NOT* do that. -->
+		<!-- This does not give a Java collection but an entity that contains a collection. -->
+		<!-- This is not friendly to use in Java. -->
+		<!-- This complicates the structure of serialized JSON/XML. -->
+		<xsd:sequence>
+			<xsd:element name="apples" type="Apple" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

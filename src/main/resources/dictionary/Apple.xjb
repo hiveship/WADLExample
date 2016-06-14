@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:annox="http://annox.dev.java.net"
+	xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance">
+
+	<jaxb:globalBindings>
+		<!-- Generates the "serialVersionUID" field and implements the "Serializable" interface -->
+		<xjc:serializable uid="3922441541422715601" />
+	</jaxb:globalBindings>
+
+	<jaxb:bindings schemaLocation="Apple.xsd">
+
+		<jaxb:bindings node="//*[@name='AppleVariety']">
+			<annox:annotate type="class">
+				@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement(localName = "apple_variety")
+			</annox:annotate>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//*[@name='Apple']">
+			<annox:annotate target="class">
+				<!-- Name of the XML element used to represent the entity when it is the *ROOT* element of a XML document -->
+				<!-- This is *NOT* used when the entity occurs elsewhere in the output, e.g. as an item of a collection or the value of a property. -->
+				@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement(localName = "apple")
+			</annox:annotate>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//*[@name='AppleCollection']">
+			<!-- Superclass of the class used to represent this entity collection -->
+			<!-- This allows to use entity collection as a Java collection. -->
+			<inheritance:extends>java.util.ArrayList&lt;Apple&gt;</inheritance:extends>
+			<annox:annotate target="class">
+				<!-- Name of the XML element used to represent the entity collection when it is the *ROOT* element of a XML document -->
+				<!-- This is *NOT* used when the entity collection occurs elsewhere in the output, e.g. as the value of property. -->
+				@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement(localName = "apples")
+			</annox:annotate>
+			<annox:annotate target="class">
+				<!-- Removes the warning due to the redundant "Serializable" interface -->
+				@java.lang.SuppressWarnings(value = {"unused"})
+			</annox:annotate>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//*[@name='BadAppleCollection']">
+			<annox:annotate target="class">
+				@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement(localName = "apples")
+			</annox:annotate>
+			<jaxb:bindings node="*/*[@name='apples']">
+				<annox:annotate target="getter">
+					<!-- Removes the warning due to the redundant "Serializable" interface -->
+					@java.lang.SuppressWarnings(value = {"unused"})
+				</annox:annotate>
+				<annox:annotate target="field">
+					@com.fasterxml.jackson.annotation.JsonUnwrapped(enabled = true)
+				</annox:annotate>
+				<annox:annotate target="field">
+					@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper(useWrapping = false)
+				</annox:annotate>
+				<annox:annotate target="field">
+					@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty(localName = "apple")
+				</annox:annotate>
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>

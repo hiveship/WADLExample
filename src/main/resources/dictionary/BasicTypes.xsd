@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.mnantel.fr/example/api" xmlns="http://www.mnantel.fr/example/api"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" jaxb:version="2.1" jaxb:extensionBindingPrefixes="xjc">
+
+	<!--  The "xjc" bindings can be included directly in this file since it is not used by the WADL specification. -->
+
+	<xsd:simpleType name="UUID">
+		<!-- This defines a "basic" type, i.e. a type which is entirely defined in Java. -->
+		<!-- It does *NOT* rely on a .xsd file and "xsdtojava" will *NOT* generate any .java file for this type. -->
+		<xsd:annotation>
+			<xsd:appinfo>
+				<!--  The "name" attribute defines the Java type used to represent this "basic" type. -->
+				<!--  The "adapter" attribute defines how to convert from the XML "base" type to the Java type. -->
+				<xjc:javaType name="java.util.UUID" adapter="fr.mnantel.example.mapping.UUIDAdapter" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<!--  XML base type used to carry the representation of the "basic" type. -->
+		<xsd:restriction base="xsd:string"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Dot">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<!-- The Java type can be a user-defined type.  -->
+				<xjc:javaType name="fr.mnantel.example.api.Dot" adapter="fr.mnantel.example.mapping.DotAdapter" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"></xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

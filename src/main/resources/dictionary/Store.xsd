@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mnantel.fr/example/api" xmlns="http://www.mnantel.fr/example/api">
+
+	<xsd:include schemaLocation="BasicTypes.xsd" />
+	<xsd:include schemaLocation="Apple.xsd" />
+
+	<xsd:complexType name="Store">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" />
+			<xsd:element name="uuid" type="UUID" />
+			<xsd:element name="where" type="Location" minOccurs="0" />
+			<xsd:element name="goods" type="AppleCollection" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Location">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string" />
+			<xsd:element name="dot" type="Dot" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

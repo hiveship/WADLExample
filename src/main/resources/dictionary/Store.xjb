@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" xmlns:annox="http://annox.dev.java.net">
+
+	<jaxb:bindings schemaLocation="Store.xsd">
+
+		<jaxb:bindings node="//*[@name='Store']">
+			<annox:annotate target="class">
+				@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement(localName = "store")
+			</annox:annotate>
+			<jaxb:bindings node="*/*[@name='goods']">
+				<annox:annotate target="field">
+					@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper(localName = "goods")
+				</annox:annotate>
+				<annox:annotate target="field">
+					@com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty(localName = "apple")
+				</annox:annotate>
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>

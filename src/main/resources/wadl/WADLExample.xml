@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:ns="http://www.mnantel.fr/nabutalk/server/api" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:example="http://www.mnantel.fr/example/api" xsi:schemaLocation="http://wadl.dev.java.net/2009/02 http://www.w3.org/Submission/wadl/wadl.xsd">
+	<!-- You must add each namespace above with : "xmlns:foo=..." -->
+
+	<doc title="Fake API"><![CDATA[
+		<p>Welcome to <b>Fake</b> API!</p>
+	]]></doc>
+
+	<!-- INCLUDE ALL DECLARATIONS USED BY THE WADL -->
+	<!-- You must specify all .xsd file for each namespace. -->
+	<grammars>
+		<!-- attributeFormDefault: "unqualified" indicates that attributes from the target namespace are not required to be qualified with the namespace prefix. -->
+		<!-- elementFormDefault: "qualified" indicates that elements from the target namespace must be qualified with the namespace prefix -->
+		<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mnantel.fr/example/api">
+			<xsd:import namespace="http://www.mnantel.fr/example/api" schemaLocation="../dictionary/Apple.xsd" />
+			<xsd:import namespace="http://www.mnantel.fr/example/api" schemaLocation="../dictionary/Store.xsd" />
+		</xsd:schema>
+	</grammars>
+
+	<!-- RESOURCES DEFINITIONS -->
+	<!-- Only add a resource id if you need to generate a new java resource class. Methods ID's must be unique for all this document. Responses status with error codes are only specified for documentation. -->
+	<resources base="http://localhost:8080/example/"> <!-- This URL is not used. -->
+		<resource path="/" id="WADLExampleService">
+
+			<method name="GET" id="ping">
+				<request></request>
+				<response status="200">
+					<representation mediaType="application/xml,application/json" element="xsd:string" />
+				</response>
+				<response status="400 401 404">
+					<representation mediaType="application/xml,application/json" element="xsd:any" />
+				</response>
+			</method>
+
+			<resource path="/stores" id="storesResource">
+				<method name="GET" id="search">
+					<response status="200">
+						<representation mediaType="application/xml,application/json" element="xsd:any" />
+					</response>
+					<response status="400 401 404">
+						<representation mediaType="application/xml,application/json" element="xsd:any" />
+					</response>
+				</method>
+				<resource path="/{uuid}">
+					<param name="uuid" style="template" type="java.util.UUID"></param>
+					<method name="GET" id="get">
+						<request></request>
+						<response status="200">
+							<representation mediaType="application/xml,application/json" element="example:Store" />
+						</response>
+						<response status="400 401 404">
+							<representation mediaType="application/xml,application/json" element="xsd:any" />
+						</response>
+					</method>
+				</resource>
+			</resource>
+
+			<resource path="/apples" id="applesResource">
+				<method name="GET" id="search">
+					<response status="200">
+						<representation mediaType="application/xml,application/json" element="example:AppleCollection" />
+					</response>
+					<response status="400 401 404">
+						<representation mediaType="application/xml,application/json" element="xsd:any" />
+					</response>
+				</method>
+				<resource path="/{uuid}">
+					<param name="uuid" style="template" type="java.util.UUID"></param>
+					<method name="PUT" id="put">
+						<response status="200">
+							<representation mediaType="application/xml,application/json" element="example:Apple" />
+						</response>
+						<response status="400 401 404">
+							<representation mediaType="application/xml,application/json" element="xsd:any" />
+						</response>
+					</method>
+				</resource>
+			</resource>
+
+		</resource>
+	</resources>
+</application>
